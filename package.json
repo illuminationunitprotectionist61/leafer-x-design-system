@@ -1,0 +1,42 @@
+{
+  "name": "leafer-design-system",
+  "version": "2.0.0",
+  "description": "基于 LeaferJS 的高保真 UI 设计系统生成器",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "bin": {
+    "leafer-design": "./cli.js"
+  },
+  "scripts": {
+    "start": "node start-mcp-service-v2.js",
+    "generate": "node leafer-design-system-pro.js",
+    "render": "node render-pro-templates.js",
+    "test": "node test-mcp-render.js"
+  },
+  "keywords": [
+    "leaferjs",
+    "ui",
+    "design-system",
+    "prototype",
+    "canvas",
+    "rendering"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "@leafer-ui/node": "^1.0.0",
+    "skia-canvas": "^1.0.0",
+    "uuid": "^9.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/leafer-design-system.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/leafer-design-system/issues"
+  },
+  "homepage": "https://github.com/yourusername/leafer-design-system#readme"
+}
