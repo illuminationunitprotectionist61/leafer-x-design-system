@@ -21,7 +21,7 @@
     "canvas",
     "rendering"
   ],
-  "author": "Your Name",
+  "author": "尽为一土 <spring60@vip.qq.com>",
   "license": "MIT",
   "dependencies": {
     "@leafer-ui/node": "^1.0.0",
@@ -33,10 +33,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/leafer-design-system.git"
+    "url": "https://github.com/q86830-hue/leafer-x-design-system.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/leafer-design-system/issues"
+    "url": "https://github.com/q86830-hue/leafer-x-design-system/issues"
   },
-  "homepage": "https://github.com/yourusername/leafer-design-system#readme"
+  "homepage": "https://github.com/q86830-hue/leafer-x-design-system#readme",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "cli.js",
+    "leafer-*.js",
+    "start-*.js",
+    "mcp-*.js",
+    "README.md",
+    "LICENSE",
+    "assets/",
+    "examples/"
+  ]
 }
