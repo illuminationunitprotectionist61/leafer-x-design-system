@@ -260,3 +260,38 @@ MIT License © 2024
 - [LeaferJS 官网](https://www.leaferjs.com/)
 - [LeaferJS GitHub](https://github.com/leaferjs/leafer)
 - [Skia Canvas](https://github.com/samizdatco/skia-canvas)
+
+---
+
+## 🤝 支持与联系
+
+如果您觉得本项目对您有帮助，欢迎请作者喝杯咖啡 ☕
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="./assets/wechat-pay.png" width="200" alt="微信支付"/>
+      <br />
+      <sub>微信支付</sub>
+    </td>
+    <td align="center">
+      <img src="./assets/wechat-qr.png" width="200" alt="联系作者"/>
+      <br />
+      <sub>联系作者</sub>
+    </td>
+  </tr>
+</table>
+
+### 联系方式
+
+- **微信**: 尽为一土
+- **邮箱**: your.email@example.com
+- **GitHub Issues**: [提交问题](https://github.com/yourusername/leafer-design-system/issues)
+
+### 加入社区
+
+欢迎加入我们的社区，一起交流 LeaferJS 和设计系统的相关技术！
+
+---
+
+**如果这个项目对你有帮助，请给我们一个 ⭐ Star！**
