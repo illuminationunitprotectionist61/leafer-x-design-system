@@ -12,6 +12,56 @@
 - ⚡ **高性能**: 缓存机制，批量渲染更高效
 - 🛠️ **CLI 工具**: 命令行快速生成和渲染
 
+## 🔄 工作流程
+
+```mermaid
+flowchart TB
+    subgraph Input["📝 输入阶段"]
+        A[用户需求] --> B{选择平台}
+        B -->|iOS/Android| C1[移动端App]
+        B -->|Web| C2[网页设计]
+        B -->|Desktop| C3[桌面应用]
+        B -->|Responsive| C4[响应式设计]
+    end
+
+    subgraph AI_Agents["🤖 AI代理系统"]
+        D[灵境UI架构师] --> E[生成UI规范JSON]
+        E --> F[灵境UI工匠]
+        F --> G[渲染HTML预览]
+        H[像素手图标设计] --> I[生成图标集]
+        J[灵境团队协作] --> K[完整产品交付]
+        L[造物者全生命周期] --> M[从想法到产品]
+    end
+
+    subgraph Output["🎨 输出阶段"]
+        G --> N[高保真UI预览]
+        I --> N
+        K --> N
+        M --> N
+        N --> O[导出PNG/SVG]
+        N --> P[获取前端代码]
+    end
+
+    C1 --> D
+    C2 --> D
+    C3 --> D
+    C4 --> D
+```
+
+### 🛠️ MCP工具速查
+
+| 工具 | 描述 | 适用平台 |
+|------|------|----------|
+| `generate_ui_spec` | 生成UI规范JSON | 全平台 |
+| `render_mobile_ui` | 渲染移动端UI | iOS/Android |
+| `web_design_system` | 网页设计系统 | Web |
+| `responsive_preview` | 响应式预览 | Responsive |
+| `design_icon_set` | 设计图标集 | 全平台 |
+| `create_product_package` | 创建产品包 | 全平台 |
+| `incubate_product` | 产品孵化 | 全平台 |
+
+> 📊 详细工作流程图请查看 [WORKFLOW_DIAGRAM.md](./WORKFLOW_DIAGRAM.md)
+
 ## 📦 安装
 
 ### 从 npm 安装（推荐）

@@ -3,12 +3,12 @@
     "leafer-design-system": {
       "command": "node",
       "args": [
-        "${workspaceFolder}/mcp-server.js"
+        "${workspaceFolder}/mcp-server-v3.js"
       ],
       "env": {
         "NODE_ENV": "production"
       },
-      "description": "Leafer Design System - 高保真UI设计系统生成和渲染服务",
+      "description": "Leafer Design System v3.1 - 全平台UI设计系统生成和渲染服务",
       "enabled": true
     }
   }
