@@ -17,8 +17,15 @@ const path = require('path');
 
 class BrowserBridge {
   constructor(options = {}) {
-    this.chromePath = options.chromePath || 
-      'G:\\dnzs\\chrome-headless-shell-win64\\chrome-headless-shell.exe';
+    // 支持多平台的 Chrome 路径
+    const defaultPaths = {
+      win32: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+      darwin: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+      linux: '/usr/bin/google-chrome'
+    };
+    
+    const platform = process.platform;
+    this.chromePath = options.chromePath || defaultPaths[platform] || defaultPaths.win32;
     this.debugPort = options.debugPort || 9222;
     this.browserProcess = null;
     this.wsEndpoint = null;
