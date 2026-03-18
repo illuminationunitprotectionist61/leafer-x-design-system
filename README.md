@@ -16,10 +16,10 @@
 
 ```bash
 # 全局安装
-npm install -g leafer-design-system
+npm install -g leafer-x-design-system
 
 # 或本地安装
-npm install leafer-design-system
+npm install leafer-x-design-system
 ```
 
 ## 🚀 快速开始
@@ -315,7 +315,7 @@ MIT License © 2024
       <sub>微信支付</sub>
     </td>
     <td align="center">
-      <img src="./assets/wechat-qr.png" width="200" alt="联系作者"/>
+      <img src="./assets/assetswechat-qr.png" width="200" alt="联系作者"/>
       <br />
       <sub>联系作者</sub>
     </td>
@@ -325,7 +325,7 @@ MIT License © 2024
 ### 联系方式
 
 - **微信**: 尽为一土
-- **邮箱**: spring60\@vip.qq.com
+- **邮箱**: <spring60@vip.qq.com>
 - **GitHub Issues**: [提交问题](https://github.com/yourusername/leafer-design-system/issues)
 
 ### 加入社区
