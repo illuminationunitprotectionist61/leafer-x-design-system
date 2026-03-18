@@ -14,6 +14,8 @@
 
 ## 📦 安装
 
+### 从 npm 安装（推荐）
+
 ```bash
 # 全局安装
 npm install -g leafer-x-design-system
@@ -21,6 +23,31 @@ npm install -g leafer-x-design-system
 # 或本地安装
 npm install leafer-x-design-system
 ```
+
+### 从 GitHub 安装（最新开发版）
+
+```bash
+# 克隆仓库
+git clone https://github.com/q86830-hue/leafer-x-design-system.git
+cd leafer-x-design-system
+
+# 安装依赖
+npm install
+
+# 启动 MCP 服务
+npm start
+```
+
+### 系统要求
+
+- **Node.js**: >= 16.0.0
+- **操作系统**: Windows 10/11、macOS 10.15+、Linux
+
+### 字体支持
+
+- **Windows**: 系统自带中文字体，无需额外配置
+- **macOS**: 系统自带中文字体（PingFang SC、STHeiti），无需额外配置
+- **Linux**: 需要安装中文字体（详见文档底部）
 
 ## 🚀 快速开始
 
