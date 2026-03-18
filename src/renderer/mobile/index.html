@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>本地电脑助手 - 手机端</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #3b82f6;
+      --primary-hover: #2563eb;
+      --success-color: #22c55e;
+      --danger-color: #ef4444;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding-bottom: 70px;
+    }
+
+    .header {
+      background: var(--card-bg);
+      padding: 16px;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-title {
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .header-status {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success-color);
+    }
+
+    .status-dot.offline {
+      background: var(--danger-color);
+    }
+
+    .content {
+      padding: 16px;
+    }
+
+    .auth-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      padding: 20px;
+    }
+
+    .auth-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--primary-color);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .auth-icon svg {
+      color: white;
+    }
+
+    .auth-title {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .auth-subtitle {
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      text-align: center;
+    }
+
+    .auth-input {
+      width: 100%;
+      max-width: 200px;
+      padding: 16px;
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      font-size: 32px;
+      text-align: center;
+      letter-spacing: 8px;
+      margin-bottom: 24px;
+      outline: none;
+    }
+
+    .auth-input:focus {
+      border-color: var(--primary-color);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .tabs {
+      display: flex;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .tab {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-secondary);
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      color: var(--primary-color);
+      border-bottom-color: var(--primary-color);
+    }
+
+    .file-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    .file-item:active {
+      background: var(--bg-color);
+    }
+
+    .file-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--bg-color);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .file-icon.folder {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--primary-color);
+    }
+
+    .file-icon.file {
+      background: rgba(100, 116, 139, 0.1);
+      color: var(--text-secondary);
+    }
+
+    .file-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .file-name {
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .file-meta {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .file-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .action-btn {
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: var(--bg-color);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    .action-btn:active {
+      background: var(--border-color);
+    }
+
+    .action-btn.download {
+      color: var(--primary-color);
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--card-bg);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      padding: 8px 0;
+      padding-bottom: max(8px, env(safe-area-inset-bottom));
+    }
+
+    .nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 8px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .nav-item.active {
+      color: var(--primary-color);
+    }
+
+    .path-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .path-item {
+      color: var(--text-secondary);
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .path-item:active {
+      color: var(--primary-color);
+    }
+
+    .path-separator {
+      color: var(--border-color);
+    }
+
+    .upload-area {
+      border: 2px dashed var(--border-color);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .upload-area.dragover {
+      border-color: var(--primary-color);
+      background: rgba(59, 130, 246, 0.05);
+    }
+
+    .upload-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 16px;
+      color: var(--text-secondary);
+    }
+
+    .upload-text {
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .transfer-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .transfer-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--card-bg);
+      border-radius: 12px;
+    }
+
+    .transfer-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .transfer-icon.upload {
+      background: rgba(34, 197, 94, 0.1);
+      color: var(--success-color);
+    }
+
+    .transfer-icon.download {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--primary-color);
+    }
+
+    .transfer-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .transfer-name {
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .transfer-progress {
+      margin-top: 8px;
+    }
+
+    .progress-bar {
+      height: 4px;
+      background: var(--bg-color);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--primary-color);
+      border-radius: 2px;
+      transition: width 0.3s;
+    }
+
+    .transfer-meta {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-secondary);
+    }
+
+    .empty-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 16px;
+      opacity: 0.5;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid var(--border-color);
+      border-top-color: var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      z-index: 1000;
+      animation: fadeIn 0.3s;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-title">本地电脑助手</div>
+    <div class="header-status">
+      <span class="status-dot" id="statusDot"></span>
+      <span id="statusText">已连接</span>
+    </div>
+  </div>
+
+  <div id="authScreen" class="auth-screen">
+    <div class="auth-icon">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+      </svg>
+    </div>
+    <h1 class="auth-title">连接电脑</h1>
+    <p class="auth-subtitle">请输入电脑端显示的验证码</p>
+    <input type="text" class="auth-input" id="authInput" maxlength="6" placeholder="000000" inputmode="numeric">
+    <button class="btn btn-primary" id="authBtn">连接</button>
+  </div>
+
+  <div id="mainScreen" class="hidden">
+    <div class="tabs">
+      <div class="tab active" data-tab="browse">浏览文件</div>
+      <div class="tab" data-tab="upload">上传文件</div>
+      <div class="tab" data-tab="history">传输记录</div>
+    </div>
+
+    <div id="browseTab" class="content">
+      <div class="path-bar" id="pathBar">
+        <span class="path-item" data-path="/">根目录</span>
+      </div>
+      <div class="file-list" id="fileList">
+        <div class="loading"><div class="spinner"></div></div>
+      </div>
+    </div>
+
+    <div id="uploadTab" class="content hidden">
+      <div class="upload-area" id="uploadArea">
+        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path>
+        </svg>
+        <p class="upload-text">点击选择文件或拖放到此处</p>
+        <input type="file" id="fileInput" multiple style="display: none;">
+        <button class="btn btn-primary" id="selectFileBtn">选择文件</button>
+      </div>
+      <div class="transfer-list" id="uploadList"></div>
+    </div>
+
+    <div id="historyTab" class="content hidden">
+      <div class="transfer-list" id="historyList">
+        <div class="loading"><div class="spinner"></div></div>
+      </div>
+    </div>
+
+    <div class="bottom-nav">
+      <div class="nav-item active" data-tab="browse">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <span>浏览</span>
+      </div>
+      <div class="nav-item" data-tab="upload">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path>
+        </svg>
+        <span>上传</span>
+      </div>
+      <div class="nav-item" data-tab="history">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        <span>记录</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = window.location.origin;
+    let sessionId = localStorage.getItem('sessionId');
+    let currentPath = '/';
+
+    const authScreen = document.getElementById('authScreen');
+    const mainScreen = document.getElementById('mainScreen');
+    const authInput = document.getElementById('authInput');
+    const authBtn = document.getElementById('authBtn');
+    const statusDot = document.getElementById('statusDot');
+    const statusText = document.getElementById('statusText');
+
+    async function checkAuth() {
+      if (sessionId) {
+        try {
+          const response = await fetch(`${API_BASE}/api/browse?path=/`, {
+            headers: { 'x-session-id': sessionId }
+          });
+          
+          if (response.ok) {
+            showMainScreen();
+            return;
+          }
+        } catch (e) {
+          console.error('Auth check failed:', e);
+        }
+      }
+      showAuthScreen();
+    }
+
+    function showAuthScreen() {
+      authScreen.classList.remove('hidden');
+      mainScreen.classList.add('hidden');
+      statusDot.classList.add('offline');
+      statusText.textContent = '未连接';
+    }
+
+    function showMainScreen() {
+      authScreen.classList.add('hidden');
+      mainScreen.classList.remove('hidden');
+      statusDot.classList.remove('offline');
+      statusText.textContent = '已连接';
+      loadFiles('/');
+    }
+
+    authBtn.addEventListener('click', async () => {
+      const code = authInput.value.trim();
+      if (code.length !== 6) {
+        showToast('请输入6位验证码');
+        return;
+      }
+
+      authBtn.disabled = true;
+      authBtn.textContent = '连接中...';
+
+      try {
+        const response = await fetch(`${API_BASE}/api/auth`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            code,
+            deviceName: navigator.userAgent.includes('iPhone') ? 'iPhone' : 
+                        navigator.userAgent.includes('iPad') ? 'iPad' : 
+                        navigator.userAgent.includes('Android') ? 'Android' : 'Mobile',
+            userAgent: navigator.userAgent
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          sessionId = data.sessionId;
+          localStorage.setItem('sessionId', sessionId);
+          showMainScreen();
+        } else {
+          showToast(data.message || '验证码错误');
+        }
+      } catch (e) {
+        showToast('连接失败，请检查网络');
+      } finally {
+        authBtn.disabled = false;
+        authBtn.textContent = '连接';
+      }
+    });
+
+    authInput.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 6);
+    });
+
+    async function loadFiles(path) {
+      currentPath = path;
+      const fileList = document.getElementById('fileList');
+      fileList.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+      try {
+        const response = await fetch(`${API_BASE}/api/browse?path=${encodeURIComponent(path)}`, {
+          headers: { 'x-session-id': sessionId }
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to load files');
+        }
+
+        const data = await response.json();
+        updatePathBar(path);
+        renderFiles(data.items);
+      } catch (e) {
+        fileList.innerHTML = `
+          <div class="empty-state">
+            <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <p>加载失败</p>
+          </div>
+        `;
+      }
+    }
+
+    function updatePathBar(path) {
+      const pathBar = document.getElementById('pathBar');
+      const parts = path.split('/').filter(p => p);
+      
+      let html = '<span class="path-item" data-path="/">根目录</span>';
+      let currentPath = '';
+      
+      parts.forEach(part => {
+        currentPath += '/' + part;
+        html += `<span class="path-separator">/</span>`;
+        html += `<span class="path-item" data-path="${currentPath}">${part}</span>`;
+      });
+      
+      pathBar.innerHTML = html;
+      
+      pathBar.querySelectorAll('.path-item').forEach(item => {
+        item.addEventListener('click', () => {
+          loadFiles(item.dataset.path);
+        });
+      });
+    }
+
+    function renderFiles(items) {
+      const fileList = document.getElementById('fileList');
+      
+      if (items.length === 0) {
+        fileList.innerHTML = `
+          <div class="empty-state">
+            <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <p>文件夹为空</p>
+          </div>
+        `;
+        return;
+      }
+
+      const folders = items.filter(i => i.isDirectory);
+      const files = items.filter(i => i.isFile);
+      
+      fileList.innerHTML = [...folders, ...files].map(item => `
+        <div class="file-item" data-path="${item.path}" data-is-dir="${item.isDirectory}">
+          <div class="file-icon ${item.isDirectory ? 'folder' : 'file'}">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              ${item.isDirectory 
+                ? '<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>'
+                : '<path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>'
+              }
+            </svg>
+          </div>
+          <div class="file-info">
+            <div class="file-name">${item.name}</div>
+          </div>
+          ${!item.isDirectory ? `
+            <button class="action-btn download" onclick="downloadFile('${item.path}', event)">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path>
+              </svg>
+            </button>
+          ` : ''}
+        </div>
+      `).join('');
+
+      fileList.querySelectorAll('.file-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+          if (e.target.closest('.action-btn')) return;
+          
+          if (item.dataset.isDir === 'true') {
+            loadFiles(item.dataset.path);
+          }
+        });
+      });
+    }
+
+    function downloadFile(filePath, event) {
+      event.stopPropagation();
+      window.location.href = `${API_BASE}/api/download?file=${encodeURIComponent(filePath)}&sessionId=${sessionId}`;
+    }
+
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+    });
+
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', () => switchTab(item.dataset.tab));
+    });
+
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab').forEach(t => {
+        t.classList.toggle('active', t.dataset.tab === tabName);
+      });
+      document.querySelectorAll('.nav-item').forEach(n => {
+        n.classList.toggle('active', n.dataset.tab === tabName);
+      });
+      
+      document.getElementById('browseTab').classList.toggle('hidden', tabName !== 'browse');
+      document.getElementById('uploadTab').classList.toggle('hidden', tabName !== 'upload');
+      document.getElementById('historyTab').classList.toggle('hidden', tabName !== 'history');
+      
+      if (tabName === 'history') {
+        loadHistory();
+      }
+    }
+
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const selectFileBtn = document.getElementById('selectFileBtn');
+
+    selectFileBtn.addEventListener('click', () => fileInput.click());
+
+    uploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+      uploadArea.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadArea.classList.remove('dragover');
+      handleFiles(e.dataTransfer.files);
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      handleFiles(e.target.files);
+    });
+
+    async function handleFiles(files) {
+      for (const file of files) {
+        uploadFile(file);
+      }
+    }
+
+    async function uploadFile(file) {
+      const uploadList = document.getElementById('uploadList');
+      const transferId = Date.now();
+      
+      const itemHtml = `
+        <div class="transfer-item" id="upload-${transferId}">
+          <div class="transfer-icon upload">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path>
+            </svg>
+          </div>
+          <div class="transfer-info">
+            <div class="transfer-name">${file.name}</div>
+            <div class="transfer-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%"></div>
+              </div>
+            </div>
+            <div class="transfer-meta">上传中...</div>
+          </div>
+        </div>
+      `;
+      
+      uploadList.insertAdjacentHTML('afterbegin', itemHtml);
+      
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('targetPath', currentPath);
+
+      try {
+        const xhr = new XMLHttpRequest();
+        
+        xhr.upload.addEventListener('progress', (e) => {
+          if (e.lengthComputable) {
+            const percent = Math.round((e.loaded / e.total) * 100);
+            const item = document.getElementById(`upload-${transferId}`);
+            if (item) {
+              item.querySelector('.progress-fill').style.width = percent + '%';
+              item.querySelector('.transfer-meta').textContent = `${percent}% · ${formatSize(e.loaded)}/${formatSize(e.total)}`;
+            }
+          }
+        });
+
+        xhr.addEventListener('load', () => {
+          const item = document.getElementById(`upload-${transferId}`);
+          if (item) {
+            item.querySelector('.transfer-meta').textContent = '上传完成';
+            item.querySelector('.progress-fill').style.width = '100%';
+          }
+        });
+
+        xhr.addEventListener('error', () => {
+          const item = document.getElementById(`upload-${transferId}`);
+          if (item) {
+            item.querySelector('.transfer-meta').textContent = '上传失败';
+          }
+        });
+
+        xhr.open('POST', `${API_BASE}/api/upload`);
+        xhr.setRequestHeader('x-session-id', sessionId);
+        xhr.send(formData);
+      } catch (e) {
+        console.error('Upload failed:', e);
+      }
+    }
+
+    async function loadHistory() {
+      const historyList = document.getElementById('historyList');
+      historyList.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+      try {
+        const response = await fetch(`${API_BASE}/api/history`, {
+          headers: { 'x-session-id': sessionId }
+        });
+
+        const history = await response.json();
+        
+        if (history.length === 0) {
+          historyList.innerHTML = `
+            <div class="empty-state">
+              <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <p>暂无传输记录</p>
+            </div>
+          `;
+          return;
+        }
+
+        historyList.innerHTML = history.map(item => `
+          <div class="transfer-item">
+            <div class="transfer-icon ${item.direction}">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                ${item.direction === 'upload' 
+                  ? '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path>'
+                  : '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path>'
+                }
+              </svg>
+            </div>
+            <div class="transfer-info">
+              <div class="transfer-name">${item.file_name}</div>
+              <div class="transfer-meta">${formatSize(item.file_size)} · ${formatDate(item.started_at)}</div>
+            </div>
+          </div>
+        `).join('');
+      } catch (e) {
+        historyList.innerHTML = `
+          <div class="empty-state">
+            <p>加载失败</p>
+          </div>
+        `;
+      }
+    }
+
+    function formatSize(bytes) {
+      if (!bytes) return '0 B';
+      const k = 1024;
+      const sizes = ['B', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      return date.toLocaleString('zh-CN');
+    }
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    checkAuth();
+  </script>
+</body>
+</html>
